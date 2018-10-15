@@ -7,6 +7,13 @@ dist: bionic
 jdk:
   - oraclejdk8
 
+jobs:
+  include:
+    - compiler: clang
+      env: BAZELFLAGS="--copt=-Wno-uninitialized --copt=-Wno-sign-compare"
+    - compiler: gcc
+      env: BAZELFLAGS="--copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare"
+
 addons:
   apt:
     sources:
@@ -27,6 +34,6 @@ addons:
       - python3-pil
 
 script:
-  - bazel --bazelrc=.travis.bazelrc build --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //...
-  - bazel --bazelrc=.travis.bazelrc test  --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare //...
-  - bazel --bazelrc=.travis.bazelrc run   --copt=-Wno-maybe-uninitialized --copt=-Wno-sign-compare --define headless=osmesa //:python_random_agent
+  - bazel --bazelrc=.travis.bazelrc build ${BAZELFLAGS} //... ;
+  - bazel --bazelrc=.travis.bazelrc test  ${BAZELFLAGS} //... ;
+  - bazel --bazelrc=.travis.bazelrc run   ${BAZELFLAGS} --define headless=osmesa //:python_random_agent ;
