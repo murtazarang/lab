@@ -802,10 +802,7 @@ cc_library(
     hdrs = ["public/dmlab.h"],
     copts = IOQ3_COMMON_COPTS,
     defines = IOQ3_COMMON_DEFINES,
-    linkopts = [
-        "-lGL",
-        "-lrt",
-    ],
+    linkopts = ["-framework OpenGL"],
     deps = IOQ3_COMMON_DEPS,
     alwayslink = 1,
 )
@@ -957,6 +954,7 @@ cc_library(
         "dmlab_graphics_sdl": [":game_lib_sdl"],
         "//conditions:default": [":dmlab_so_loader"],
     }),
+    alwayslink = 1,
 )
 
 cc_binary(
