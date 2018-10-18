@@ -808,6 +808,26 @@ cc_library(
 )
 
 cc_library(
+    name = "game_lib_headless_macos",
+    srcs = IOQ3_COMMON_SRCS + [
+        CODE_DIR + "/deepmind/dmlab_connect.c",
+        CODE_DIR + "/null/null_input.c",
+        CODE_DIR + "/null/null_snddma.c",
+
+        ## OpenGL rendering
+        CODE_DIR + "/deepmind/headless_macos_glimp.c",
+        CODE_DIR + "/deepmind/glimp_common.h",
+        CODE_DIR + "/deepmind/glimp_common.c",
+    ],
+    hdrs = ["public/dmlab.h"],
+    copts = IOQ3_COMMON_COPTS,
+    defines = IOQ3_COMMON_DEFINES,
+    linkopts = ["-framework OpenGL"],
+    deps = IOQ3_COMMON_DEPS,
+    alwayslink = 1,
+)
+
+cc_library(
     name = "game_lib_headless_osmesa",
     srcs = IOQ3_COMMON_SRCS + [
         CODE_DIR + "/deepmind/dmlab_connect.c",
@@ -842,10 +862,7 @@ cc_library(
     hdrs = ["public/dmlab.h"],
     copts = IOQ3_COMMON_COPTS,
     defines = IOQ3_COMMON_DEFINES,
-    linkopts = [
-        "-lGL",
-        "-lX11",
-    ],
+    linkopts = ["-framework OpenGL"],
     deps = IOQ3_COMMON_DEPS,
     alwayslink = 1,
 )
@@ -865,10 +882,7 @@ cc_library(
     hdrs = ["public/dmlab.h"],
     copts = IOQ3_COMMON_COPTS,
     defines = IOQ3_COMMON_DEFINES,
-    linkopts = [
-        "-lEGL",
-        "-lGL",
-    ],
+    linkopts = ["-framework OpenGL"],
     deps = IOQ3_COMMON_DEPS + ["//third_party/GL/util:egl_util"],
     alwayslink = 1,
 )
@@ -898,27 +912,18 @@ config_setting(
 
 cc_binary(
     name = "libdmlab_headless_hw.so",
-    linkopts = ["-Wl,--version-script,$(location :dmlab.lds)"],
     linkshared = 1,
     linkstatic = 1,
     visibility = ["//testing:__subpackages__"],
-    deps = [":dmlab.lds"] + select({
-        "dmlab_graphics_osmesa_or_egl": [":game_lib_headless_egl"],
-        "dmlab_graphics_osmesa_or_glx": [":game_lib_headless_glx"],
-        "//conditions:default": [":game_lib_headless_egl"],
-    }),
+    deps = [":game_lib_headless_macos"],
 )
 
 cc_binary(
     name = "libdmlab_headless_sw.so",
-    linkopts = ["-Wl,--version-script,$(location :dmlab.lds)"],
     linkshared = 1,
     linkstatic = 1,
     visibility = ["//testing:__subpackages__"],
-    deps = [
-        ":dmlab.lds",
-        ":game_lib_headless_osmesa",
-    ],
+    deps = [":game_lib_headless_osmesa"],
 )
 
 cc_library(
