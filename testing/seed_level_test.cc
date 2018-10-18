@@ -23,7 +23,7 @@ TEST(SeedLevelTest, RandomSeedTest) {
 
   DeepMindLabLaunchParams params = {};
   params.runfiles_path = runfiles_path.c_str();
-  params.renderer = DeepMindLabRenderer_Software;
+  params.renderer = DeepMindLabRenderer_Hardware;
 
   EnvCApi env_c_api;
   void* context;

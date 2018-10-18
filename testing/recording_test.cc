@@ -115,7 +115,7 @@ class RecordingTest : public ::testing::Test {
 TEST_F(RecordingTest, SavesRecordingToDemoDirectory) {
   DeepMindLabLaunchParams params = {};
   params.runfiles_path = runfiles_path.c_str();
-  params.renderer = DeepMindLabRenderer_Software;
+  params.renderer = DeepMindLabRenderer_Hardware;
 
   EnvCApi env_c_api;
   void* context;
@@ -152,7 +152,7 @@ TEST_F(RecordingTest, SavesRecordingToDemoDirectory) {
 TEST_F(RecordingTest, PlaysDemoFromDemoDirectory) {
   DeepMindLabLaunchParams params = {};
   params.runfiles_path = runfiles_path.c_str();
-  params.renderer = DeepMindLabRenderer_Software;
+  params.renderer = DeepMindLabRenderer_Hardware;
 
   EnvCApi env_c_api;
   void* context;
@@ -216,7 +216,7 @@ TEST_F(RecordingTest, PlaysDemoFromDemoDirectory) {
 TEST_F(RecordingTest, RecordsMultipleVideos) {
   DeepMindLabLaunchParams params = {};
   params.runfiles_path = runfiles_path.c_str();
-  params.renderer = DeepMindLabRenderer_Software;
+  params.renderer = DeepMindLabRenderer_Hardware;
 
   EnvCApi env_c_api;
   void* context;
@@ -270,7 +270,7 @@ TEST_F(RecordingTest, RecordsMultipleVideos) {
 TEST_F(RecordingTest, TotalScorePreserved) {
   DeepMindLabLaunchParams params = {};
   params.runfiles_path = runfiles_path.c_str();
-  params.renderer = DeepMindLabRenderer_Software;
+  params.renderer = DeepMindLabRenderer_Hardware;
 
   EnvCApi env_c_api;
   void* context;
@@ -325,7 +325,7 @@ TEST_F(RecordingTest, TotalScorePreserved) {
 TEST_F(RecordingTest, MissingDemoFilesSetsError) {
   DeepMindLabLaunchParams params = {};
   params.runfiles_path = runfiles_path.c_str();
-  params.renderer = DeepMindLabRenderer_Software;
+  params.renderer = DeepMindLabRenderer_Hardware;
 
   EnvCApi env_c_api;
   void* context;
