@@ -7,14 +7,14 @@ cc_library(
     name = "python",
     hdrs = select(
         {
-            "@bazel_tools//tools/python:PY2": glob(["include/python2.7/*.h"]),
+            "@bazel_tools//tools/python:PY2": glob(["local/lib/python2.7/dist-packages/numpy/core/include/numpy/*.h"]),
             "@bazel_tools//tools/python:PY3": glob(["include/python3.6/*.h"]),
         },
         no_match_error = "Internal error, Python version should be one of PY2 or PY3",
     ),
     includes = select(
         {
-            "@bazel_tools//tools/python:PY2": ["include/python2.7"],
+            "@bazel_tools//tools/python:PY2": ["local/lib/python2.7/dist-packages/numpy/core/include"],
             "@bazel_tools//tools/python:PY3": ["include/python3.6"],
         },
         no_match_error = "Internal error, Python version should be one of PY2 or PY3",
