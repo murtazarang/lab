@@ -170,5 +170,5 @@ new_local_repository(
 new_local_repository(
     name = "python_system",
     build_file = "@//bazel:python.BUILD",
-    path = "/usr/bin",
+    path = "/lib",
 )
